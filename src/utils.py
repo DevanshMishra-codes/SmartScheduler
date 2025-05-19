@@ -1,13 +1,5 @@
 def classify_efficiency(avg_waiting_time, avg_turnaround_time, avg_response_time):
-    """
-    Classifies each score in the list as 'High', 'Mid', or 'Low' based on dynamic thresholds.
-
-    Parameters:
-        scores (list of float): List of efficiency scores.
-
-    Returns:
-        list of str: Corresponding efficiency labels for each score.
-    """
+    
     scores = ((avg_waiting_time * 0.5) + (avg_turnaround_time * 0.3) + (avg_response_time * 0.2)) / 3
 
     if not scores:
