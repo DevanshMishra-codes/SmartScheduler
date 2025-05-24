@@ -13,29 +13,32 @@ def load_dataset(filename="synthetic_process_dataset.csv"):
 def main():
     process_data = load_dataset()
 
-    fcfs_result = fcfs_scheduling(process_data.copy())
-    print("FCFS Efficiency:", classify_efficiency(*fcfs_result))
+    algorithms = [
+        ("FCFS", fcfs_scheduling),
+        ("SJF", sjf_scheduling),
+        ("LJF", ljf_scheduling),
+        ("SRTF", srtf_scheduling),
+        ("LRTF", lrtf_scheduling),
+        ("Round Robin", round_robin_scheduling),
+        ("Priority", priority_scheduling),
+        ("HRRN", hrrn_scheduling)
+    ]
 
-    sjf_result = sjf_scheduling(process_data.copy())
-    print("SJF Efficiency:", classify_efficiency(*sjf_result))
+    avg_waiting_times = []
+    avg_turnaround_times = []
+    avg_response_times = []
 
-    ljf_result = ljf_scheduling(process_data.copy())
-    print("LJF Efficiency:", classify_efficiency(*ljf_result))
+    for _, algo in algorithms:
+        result = algo(process_data.copy())
+        avg_waiting_times.append(result[0])
+        avg_turnaround_times.append(result[1])
+        avg_response_times.append(result[2])
 
-    srtf_result = srtf_scheduling(process_data.copy())
-    print("SRTF Efficiency:", classify_efficiency(*srtf_result))
+    labels = classify_efficiency(avg_waiting_times, avg_turnaround_times, avg_response_times)
 
-    lrtf_result = lrtf_scheduling(process_data.copy())
-    print("LRTF Efficiency:", classify_efficiency(*lrtf_result))
-
-    rr_result = round_robin_scheduling(process_data.copy())
-    print("Round Robin Efficiency:", classify_efficiency(*rr_result))
-
-    priority_result = priority_scheduling(process_data.copy())
-    print("Priority Efficiency:", classify_efficiency(*priority_result))
-
-    hrrn_result = hrrn_scheduling(process_data.copy())
-    print("HRRN Efficiency:", classify_efficiency(*hrrn_result))
+    print("Algorithm Efficiency Classification:\n")
+    for (name, _), label in zip(algorithms, labels):
+        print(f"{name}: {label}")
 
 if __name__ == "__main__":
     main()
