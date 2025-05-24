@@ -1,14 +1,12 @@
-def classify_efficiency(avg_waiting_time, avg_turnaround_time, avg_response_time):
-    
-    scores = ((avg_waiting_time * 0.5) + (avg_turnaround_time * 0.3) + (avg_response_time * 0.2)) / 3
-
-    if not scores:
-        return []
+def classify_efficiency(avg_waiting_times, avg_turnaround_times, avg_response_times):
+    scores = [
+        (w * 0.5 + t * 0.3 + r * 0.2)
+        for w, t, r in zip(avg_waiting_times, avg_turnaround_times, avg_response_times)
+    ]
 
     min_score = min(scores)
     max_score = max(scores)
-    score_range = max_score - min_score
-    threshold = score_range / 3
+    threshold = (max_score - min_score) / 3 if max_score != min_score else 1  # Avoid zero division
 
     labels = []
     for score in scores:
@@ -20,4 +18,5 @@ def classify_efficiency(avg_waiting_time, avg_turnaround_time, avg_response_time
             labels.append('Low')
 
     return labels
+
    
