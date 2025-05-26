@@ -5,10 +5,10 @@ from src.scheduler import (
 )
 from src.utils import classify_efficiency
 
-def load_dataset(filename="synthetic_process_dataset.csv"):
+def load_dataset(filename="synthetic_process_dataset_with_groupid.csv"):
     df = pd.read_csv(filename)
-    # Convert dataframe to list of tuples: (Process ID, Arrival Time, Burst Time, Priority)
-    return list(df.itertuples(index=False, name=None))
+    process_data = df[["ProcessID", "ArrivalTime", "BurstTime", "Priority"]]
+    return list(process_data.itertuples(index=False, name=None))
 
 def main():
     process_data = load_dataset()
