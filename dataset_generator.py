@@ -1,20 +1,23 @@
 import pandas as pd
-import numpy as np
+import random
 
-def generate_dataset(filename="synthetic_process_dataset.csv", num_processes=5000):
-    np.random.seed(42)
+# Constants
+num_groups = 100            # Number of distinct workloads
+rows_per_group = 50         # Number of processes per workload
+total_rows = num_groups * rows_per_group
 
-    process_id = ['P' + str(i+1) for i in range(num_processes)]
-    arrival_time = np.random.randint(0, 1000, size=num_processes)
-    burst_time = np.random.randint(1, 50, size=num_processes)
-    priority = np.random.randint(1, 20, size=num_processes)
+# Data generation
+data = []
+for group_id in range(1, num_groups + 1):
+    for i in range(rows_per_group):
+        process_id = f'P{group_id}_{i+1}'
+        arrival_time = random.randint(0, 50)
+        burst_time = random.randint(1, 20)
+        priority = random.randint(1, 5)
+        data.append([process_id, arrival_time, burst_time, priority, group_id])
 
-    df = pd.DataFrame({
-        'Process ID': process_id,
-        'Arrival Time': arrival_time,
-        'Burst Time': burst_time,
-        'Priority': priority
-    })
+# Create DataFrame
+df = pd.DataFrame(data, columns=["ProcessID", "ArrivalTime", "BurstTime", "Priority", "GroupID"])
 
-    df.to_csv(filename, index=False)
-    print(f"Dataset generated and saved as '{filename}'")
+# Save to CSV
+df.to_csv("synthetic_process_dataset_with_groupid.csv", index=False)
