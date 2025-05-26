@@ -50,9 +50,9 @@ def generate_training_data(dataset):
     return X, y
 
 
-def load_dataset(filename="synthetic_process_dataset.csv"):
+def load_dataset(filename="synthetic_process_dataset_with_groupid.csv"):
     df = pd.read_csv(filename)
-    grouped = df.groupby('GroupID')  # Assume GroupID indicates separate workloads
+    grouped = df.groupby('GroupID')
     return [list(group.itertuples(index=False, name=None)) for _, group in grouped]
 
 
@@ -85,3 +85,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+ 
