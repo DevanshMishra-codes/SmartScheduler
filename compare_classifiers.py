@@ -78,9 +78,9 @@ def main():
     print(f"Decision Tree Predicted Best Algorithm: {ml_prediction}")
 
     if ml_prediction == score_prediction:
-        print("✅ Both approaches agree.")
+        print("Both approaches agree.")
     else:
-        print("❗ Approaches differ.")
+        print("Approaches differ.")
 
 
 if __name__ == "__main__":
